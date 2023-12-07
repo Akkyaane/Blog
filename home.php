@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-include "../db/db.php";
+include "db/db.php";
 
 ?>
 
@@ -39,6 +39,9 @@ include "../db/db.php";
     <div class="container mt-3">
       <table class="table">
         <thead>
+          <td>Titre</td>
+          <td>Auteur</td>
+          <td>Créé le</td>
         </thead>
         <tbody>
           <?php
@@ -46,100 +49,22 @@ include "../db/db.php";
             echo "Connexion échouée.";
             echo "<br><button><a href='../../authentication/login/login.php'>Retour</a></button>";
           } else {
-            $sql = 'SELECT * from article';
+            $sql = 'SELECT * from articles';
             $request = $dbConnect->prepare($sql);
-            $request->bindParam(1, $_SESSION['id'], PDO::PARAM_INT);
             $request->execute();
             while ($array = $request->fetchAll()) {
               if (!(empty($array))) {
                 foreach ($array as $row) {
                   echo '<tr>
-                              <td>Du ' . '<strong>' . $row['start_date'] . '</strong>' . ' au ' . '<strong>' . $row['end_date'] . '</strong></td>';
-                  if ($row['nights_number'] === NULL) {
-                    $row['nights_number'] = 0;
-                    echo '<td>' . $row['nights_number'] . '</td>';
-                  } else {
-                    echo '<td>' . $row['nights_number'] . '</td>';
+                              <td>'.$row['titre'].'</td>
+                              <td>'.$row['auteur_article'].'</td>
+                              <td>'.$row['date_creation'].'</td>';
                   }
-                  echo '
-                              <td>Indisponible</td>
-                              <td>' . $row['request_date'] . '</td>';
-                  if (!(empty($row['status']))) {
-                    if ($row['status'] === 1) {
-                      $row['status'] = "Validée";
-                      echo '
-                                  <td>
-                                  <button class="btn btn-sm btn-primary"><a href="../v-functionalities/v-ExpenseSheet/v-ReadExpenseSheet.php?readid=' . $row['1'] . '"style="color: white; text-decoration: none">Consulter</a></button>
-                                  </td>';
-                    } else if ($row['status'] === 0) {
-                      $row['status'] = "Refusée";
-                      echo '
-                                  <td>
-                                  <button class="btn btn-sm btn-primary"><a href="../v-functionalities/v-ExpenseSheet/v-ReadExpenseSheet.php?readid=' . $row['1'] . '"style="color: white; text-decoration: none">Consulter</a></button>
-                                  </td>';
-                    } else {
-                      $row['status'] = "En traitement";
-                      echo '
-                                  <td>
-                                  <button class="btn btn-sm btn-primary"><a href="../v-functionalities/v-ExpenseSheet/v-ReadExpenseSheet.php?readid=' . $row['1'] . '"style="color: white; text-decoration: none">Consulter</a></button>
-                                  <button class="btn btn-sm btn-primary"><a href="../v-functionalities/v-ExpenseSheet/v-UpdateExpenseSheet.php?updateid=' . $row['1'] . '"style="color: white; text-decoration: none">Modifier</a></button>
-                                  <button class="btn btn-sm btn-danger"><a href="../../../models/visitor/v-ExpenseSheet/v-DeleteExpenseSheet.php?deleteid=' . $row['1'] . '"style="color: white; text-decoration: none">Supprimer</a></button>
-                                  </td>';
-                    }
-                  } else {
-                    echo '
-                                  <td>En traitement</td>
-                                  <td>
-                                  <button class="btn btn-sm btn-primary"><a href="../v-functionalities/v-ExpenseSheet/v-ReadExpenseSheet.php?readid=' . $row['1'] . '"style="color: white; text-decoration: none">Consulter</a></button>
-                                  <button class="btn btn-sm btn-primary"><a href="../v-functionalities/v-ExpenseSheet/v-UpdateExpenseSheet.php?updateid=' . $row['1'] . '"style="color: white; text-decoration: none">Modifier</a></button>
-                                  <button class="btn btn-sm btn-danger"><a href="../../../models/visitor/v-ExpenseSheet/v-DeleteExpenseSheet.php?deleteid=' . $row['1'] . '"style="color: white; text-decoration: none">Supprimer</a></button>
-                                  </td>
-                                ';
-                  }
-                }
               } else {
-                $sql = 'SELECT u.id, e.* FROM users u INNER JOIN expensesheets e ON u.id = e.user_id  WHERE u.id = ?';
-                $request = $dbConnect->prepare($sql);
-                $request->bindParam(1, $_SESSION['id'], PDO::PARAM_INT);
-                $request->execute();
-                while ($array = $request->fetchAll()) {
-                  foreach ($array as $row) {
-                    echo '<tr>
-                    <td>Du' . $row['start_date'] . '</strong>' . ' au ' . '<strong>' . $row['end_date'] . '</strong></td>' . '</td>';
-                    if ($row['nights_number'] === NULL) {
-                      $row['nights_number'] = 0;
-                      echo '<td>' . $row['nights_number'] . '</td>';
-                    } else {
-                      echo '<td>' . $row['nights_number'] . '</td>';
-                    }
-                    echo '
-                              <td>Indisponible</td>
-                              <td>' . $row['request_date'] . '</td>';
-                    if (!(empty($row['status']))) {
-                      if ($row['status'] === 1) {
-                        $row['status'] = "Validée";
-                        echo '
-                                  <td>
-                                  <button class="btn btn-sm btn-primary"><a href="../v-functionalities/v-ExpenseSheet/v-ReadExpenseSheet.php?readid=' . $row['1'] . '"style="color: white; text-decoration: none">Consulter</a></button>
-                                  </td>';
-                      } else if ($row['status'] === 0) {
-                        $row['status'] = "Refusée";
-                        echo '
-                                  <td>
-                                  <button class="btn btn-sm btn-primary"><a href="../v-functionalities/v-ExpenseSheet/v-ReadExpenseSheet.php?readid=' . $row['1'] . '"style="color: white; text-decoration: none">Consulter</a></button>
-                                  </td>';
-                      } else {
-                        $row['status'] = "En traitement";
-                        echo '
-                                  <td>
-                                  <button class="btn btn-sm btn-primary"><a href="../v-functionalities/v-ExpenseSheet/v-ReadExpenseSheet.php?readid=' . $row['1'] . '"style="color: white; text-decoration: none">Consulter</a></button>
-                                  <button class="btn btn-sm btn-primary"><a href="../v-functionalities/v-ExpenseSheet/v-UpdateExpenseSheet.php?updateid=' . $row['1'] . '"style="color: white; text-decoration: none">Modifier</a></button>
-                                  <button class="btn btn-sm btn-danger"><a href="../../../models/visitor/v-ExpenseSheet/v-DeleteExpenseSheet.php?deleteid=' . $row['1'] . '"style="color: white; text-decoration: none">Supprimer</a></button>
-                                  </td>';
-                      }
-                    }
-                  }
-                }
+                echo '<tr>
+                <td><td>
+                <td>Aucun article</td>
+                <td></td>';
               }
             }
           }
