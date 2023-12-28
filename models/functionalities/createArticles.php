@@ -1,8 +1,8 @@
 <?php
 
-function signup($data) {
+function createArticles($data) {
     try {
-        $sql = 'INSERT INTO users (username, email, password) VALUES (:u, :e, :p)';
+        $sql = 'INSERT INTO articles (author, category, title, content, publication_date) VALUES (:a, :ca, :t, :co, :pd)';
         $request = dbConnection()->prepare($sql);
         $request->execute($data);
     } catch (Exception $e) {

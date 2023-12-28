@@ -1,10 +1,10 @@
 <?php
 
-function login() {
+function displaySingleUserData($id) {
     try {
-        $sql = 'SELECT * FROM users WHERE username = ?';
+        $sql = 'SELECT * FROM users where id = ?';
         $request = dbConnection()->prepare($sql);
-        $request->bindParam(1, $_POST['username'], PDO::PARAM_STR);
+        $request->bindParam(1, $id, PDO::PARAM_INT);
         $request->execute();
         $data = $request->fetch(PDO::FETCH_ASSOC);
     } catch (Exception $e) {

@@ -1,0 +1,46 @@
+.c-a-index {
+    color: black !important;
+    border-radius: 15px !important;
+    padding: 5px 15px !important;
+    margin: 3px !important;
+    width: 7.6rem;
+}
+
+.c-a-index:hover {
+    color: white !important;
+    background-color: black !important;
+    border-radius: 15px !important;
+    padding: 5px 15px !important;
+    margin: 3px !important;
+}
+
+.c-div-index {
+    text-align: justify !important;
+    border-bottom: solid black 1px !important;
+}
+
+.c-a2-index:active {
+    color: black !important;
+    text-decoration: none !important;
+    background: none !important;
+}
+
+.c-a3-index {
+    color: black !important;
+    text-decoration: none !important;
+}
+
+.c-button-index {
+    border-radius: 15px !important;
+}
+
+.c-input:focus {
+    border-color: #000000 !important;
+    box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, 0.25) !important;
+}
+
+.c-a-createArticle {
+    color: white !important;
+    text-decoration: none !important;
+}
+

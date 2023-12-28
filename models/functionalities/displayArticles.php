@@ -1,12 +1,11 @@
 <?php
 
-function login() {
+function displayArticles() {
     try {
-        $sql = 'SELECT * FROM users WHERE username = ?';
+        $sql = 'SELECT * FROM articles';
         $request = dbConnection()->prepare($sql);
-        $request->bindParam(1, $_POST['username'], PDO::PARAM_STR);
         $request->execute();
-        $data = $request->fetch(PDO::FETCH_ASSOC);
+        $data = $request->fetchAll(PDO::FETCH_ASSOC);
     } catch (Exception $e) {
         die('Erreur : ' . $e->getMessage());
     }
